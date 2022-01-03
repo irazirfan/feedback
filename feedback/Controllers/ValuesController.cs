@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using feedback.Models;
 using feedback.Entities;
 
 namespace feedback.Controllers
@@ -16,32 +15,32 @@ namespace feedback.Controllers
 
         // GET api/v1
         [Route("api/v1")]
-        public IEnumerable<ApiViewModel> Get()
+        public IEnumerable<ApiViewModel> GetAll()
         {
-
             var feedbackList = from p in _db.Posts
                                join c in _db.Comments on p.postId equals c.postId
+                               join u in _db.Users on p.userEmail equals u.email
+                               join us in _db.Users on c.userEmail equals us.email
                                select new ApiViewModel
                                {
                                    PostDetails = p.postDetails,
-                                   PosterName = p.userEmail,
+                                   PosterName = u.name,
                                    PostedAt = p.createdAt,
                                    CommentDetails = c.commentDetails,
-                                   CommenterName = c.userEmail,
+                                   CommenterName = us.name,
                                    CommenetedAt = c.createdAt,
                                    UpvoteCount = c.upvoteCount,
                                    DownvoteCount = c.downvoteCount
                                };
 
-
             return feedbackList;
         }
 
-        /*private string GetUsername(string email)
-        {
-            var username = from u in _db.Users.Where(u => u.email == email) select u.name;
-            return username.ToString();
-        }*/
+            /*private string GetUsername(string email)
+            {
+                var username = from u in _db.Users.Where(u => u.email == email) select u.name;
+                return username.ToString();
+            }*/
 
-    }
+        }
 }
