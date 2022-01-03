@@ -26,6 +26,8 @@ namespace feedback.Controllers
                                    PostDetails = p.postDetails,
                                    PosterName = u.name,
                                    PostedAt = p.createdAt,
+                                   //CommentCount = (int) from a in _db.Comments.GroupBy(x => x.postId).Select(g => g.Count()),
+                                   CommentCount = (int)p.commentCount,
                                    CommentDetails = c.commentDetails,
                                    CommenterName = us.name,
                                    CommenetedAt = c.createdAt,

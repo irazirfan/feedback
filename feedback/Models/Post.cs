@@ -18,6 +18,7 @@ namespace feedback.Models
         public string postDetails { get; set; }
         public System.DateTime createdAt { get; set; }
         public string userEmail { get; set; }
+        public Nullable<int> commentCount { get; set; }
     
         public virtual User User { get; set; }
     }

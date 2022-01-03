@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="feedbackDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="feedbackDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Comment">
           <Key>
             <PropertyRef Name="commentId" />
@@ -25,6 +25,7 @@
           <Property Name="postDetails" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="createdAt" Type="date" Nullable="false" />
           <Property Name="userEmail" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="commentCount" Type="int" />
         </EntityType>
         <EntityType Name="Reaction">
           <Key>
@@ -114,8 +115,7 @@
             <End Role="Reaction" EntitySet="Reaction" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="feedbackDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -142,6 +142,7 @@
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="userEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Post_User" FromRole="Post" ToRole="User" />
+          <Property Name="commentCount" Type="Int32" />
         </EntityType>
         <EntityType Name="Reaction">
           <Key>
@@ -258,6 +259,7 @@
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="feedbackDBModel.Post">
               <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="commentCount" ColumnName="commentCount" />
                 <ScalarProperty Name="postId" ColumnName="postId" />
                 <ScalarProperty Name="postDetails" ColumnName="postDetails" />
                 <ScalarProperty Name="createdAt" ColumnName="createdAt" />
