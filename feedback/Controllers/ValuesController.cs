@@ -4,16 +4,21 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using feedback.Models;
+using feedback.Entities;
 
 namespace feedback.Controllers
 {
     
     public class ValuesController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        private FeedbackDBContext db = new FeedbackDBContext();
+
+        // GET api/v1
+        [Route("api/v1")]
+        public IQueryable<User> Get()
         {
-            return new string[] { "value1", "value2" };
+            return db.Users;
         }
 
         // GET api/values/5
