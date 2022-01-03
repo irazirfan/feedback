@@ -12,34 +12,36 @@ namespace feedback.Controllers
     
     public class ValuesController : ApiController
     {
-        private FeedbackDBContext db = new FeedbackDBContext();
+        private FeedbackDBContext _db = new FeedbackDBContext();
 
         // GET api/v1
         [Route("api/v1")]
-        public IQueryable<User> Get()
+        public IEnumerable<ApiViewModel> Get()
         {
-            return db.Users;
+
+            var feedbackList = from p in _db.Posts
+                               join c in _db.Comments on p.postId equals c.postId
+                               select new ApiViewModel
+                               {
+                                   PostDetails = p.postDetails,
+                                   PosterName = p.userEmail,
+                                   PostedAt = p.createdAt,
+                                   CommentDetails = c.commentDetails,
+                                   CommenterName = c.userEmail,
+                                   CommenetedAt = c.createdAt,
+                                   UpvoteCount = c.upvoteCount,
+                                   DownvoteCount = c.downvoteCount
+                               };
+
+
+            return feedbackList;
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        /*private string GetUsername(string email)
         {
-            return "value";
-        }
+            var username = from u in _db.Users.Where(u => u.email == email) select u.name;
+            return username.ToString();
+        }*/
 
-        // POST api/values
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
     }
 }
