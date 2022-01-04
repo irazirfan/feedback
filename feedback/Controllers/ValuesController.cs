@@ -34,15 +34,15 @@ namespace feedback.Controllers
                                    UpvoteCount = c.upvoteCount,
                                    DownvoteCount = c.downvoteCount
                                };
-
+            
             return feedbackList;
         }
 
-            /*private string GetUsername(string email)
-            {
-                var username = from u in _db.Users.Where(u => u.email == email) select u.name;
-                return username.ToString();
-            }*/
+        /*private string GetUsername(string email)
+        {
+            var username = from u in _db.Users.Where(u => u.email == email) select u.name;
+            return username.ToString();
+        }*/
 
-        }
+    }
 }
